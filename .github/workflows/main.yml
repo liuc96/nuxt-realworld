@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@master
       - run: npm install
       - run: npm run build
-      - run: tar -zcvf release${{ github.ref }}.tgz .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json
+      - run: tar -zcvf release${{ github.ref_name }}.tgz .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json
 
       # 发布 Release
       - name: Create Release
@@ -39,8 +39,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release${{ github.ref }}.tgz
-          asset_name: release${{ github.ref }}.tgz
+          asset_path: ./release${{ github.ref_name }}.tgz
+          asset_name: release${{ github.ref_name }}.tgz
           asset_content_type: application/x-tgz
 
       # # 部署到服务器
