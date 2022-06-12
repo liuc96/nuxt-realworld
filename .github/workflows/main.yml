@@ -39,21 +39,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release.tgz
-          asset_name: release.tgz
+          asset_path: ./release${{ github.ref }}.tgz
+          asset_name: release${{ github.ref }}.tgz
           asset_content_type: application/x-tgz
 
-      # 部署到服务器
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /root/realworld-nuxtjs
-            wget https://github.com/lipengzhou/realworld-nuxtjs/releases/latest/download/release.tgz -O release.tgz
-            tar zxvf release.tgz
-            npm install --production
-            pm2 reload pm2.config.json
+      # # 部署到服务器
+      # - name: Deploy
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     port: ${{ secrets.PORT }}
+      #     script: |
+      #       cd /root/realworld-nuxtjs
+      #       wget https://github.com/lipengzhou/realworld-nuxtjs/releases/latest/download/release.tgz -O release.tgz
+      #       tar zxvf release.tgz
+      #       npm install --production
+      #       pm2 reload pm2.config.json
